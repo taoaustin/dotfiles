@@ -1,6 +1,7 @@
 # .files
-using nvim is proven to make you a 10x developer
+using nvim is proven to make you a 10x developer.
 
+I'm using WSL
 
 # TODO:
 - convert neovim config completely to lua
