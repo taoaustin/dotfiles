@@ -61,8 +61,7 @@ require('packer').startup(function(use)
     use 'windwp/nvim-autopairs' -- auto closing brackets + indent
     use 'petertriho/nvim-scrollbar' -- shows a scrollbar + extra
     use 'norcalli/nvim-colorizer.lua' -- highlights hex color w/ its color
-    use 'jacoborus/tender.vim'
-    use 'shaunsingh/nord.nvim'
+    use 'marko-cerovac/material.nvim' -- colorscheme
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.0',
         requires = { {'nvim-lua/plenary.nvim'} }
@@ -82,13 +81,18 @@ vim.filetype.add({
 })
 
 -- CUSTOM MAPPINGS
+    -- convenient multi-line tabs
 vim.api.nvim_set_keymap("v", "<Tab>", ">gv", {noremap = true})
 vim.api.nvim_set_keymap("v", "<S-Tab>", "<gv", {noremap = true})
 vim.api.nvim_set_keymap("i", "<S-Tab>", "<C-d>", {noremap = true})
 vim.api.nvim_set_keymap("n", "<Tab>", ">>", {noremap = true})
 vim.api.nvim_set_keymap("n", "<S-Tab>", "<<", {noremap = true})
-vim.api.nvim_set_keymap("n", "<C-s>", ":w<CR>", {noremap = true})
-vim.api.nvim_set_keymap("i", "<C-s>", "<Esc>:w<CR>i", {noremap = true})
+    -- for ctrl-s saves
+vim.api.nvim_set_keymap("n", "<C-s>", ":w<CR>", {noremap = true}) 
+vim.api.nvim_set_keymap("i", "<C-s>", "<Esc>:w<CR>a", {noremap = true})
+    -- for ctrl-v paste 
+vim.keymap.set("n", "<C-v>", "\"+p", {noremap = true})
+vim.keymap.set("i", "<C-v>", "<Esc>\"+pa", {noremap = true})
 
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, {noremap = true})
@@ -96,15 +100,19 @@ vim.keymap.set('n', '<leader>fg', builtin.live_grep, {noremap = true})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {noremap = true})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {noremap = true})
 
+
+vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>")
+vim.keymap.set("n","gd", "<cmd>Lspsaga goto_definition<CR>")
+
 -- SET COLORSCHEME
---vim.cmd 'let g:everforest_background = "hard"'
-vim.cmd 'colorscheme nord'
+vim.g.material_style = "darker"
+vim.cmd 'colorscheme material'
 vim.cmd 'highlight Normal guibg=NONE ctermbg=NONE' --TRANSPARENT BG
 vim.cmd 'highlight EndOfBuffer guibg=None ctermbg=None' -- TRANSPARENT EOB
-
+ 
 -- LUALINE
 require('lualine').setup {
-    options = {theme = 'nord'},
+    options = {theme = 'auto'},
     extensions = {'fugitive'}
 }
 
@@ -159,7 +167,7 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 local lspconfig = require('lspconfig')
-local servers = {"sumneko_lua", "tsserver", "jdtls"} -- SERVERS HERE
+local servers = {"sumneko_lua", "tsserver", "jdtls", "clangd", "ocamllsp"} -- SERVERS HERE
 for _, server in ipairs(servers) do
     lspconfig[server].setup {
         capabilities = capabilities
