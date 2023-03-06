@@ -11,21 +11,21 @@ local themes_path = string.format("%s/.config/awesome/themes/", os.getenv("HOME"
 
 local theme = {}
 
-theme.font          = "NotoMono Nerd Font 12"--"sans 8"
+theme.font          = "NotoMono Nerd Font 10"--"sans 8"
 
-theme.bg_normal     = "#2e3440f3" -- ~95% opacity
-theme.bg_focus      = "#d8dee9"--"#535d6c"
+theme.bg_normal     = "#17191af3" -- ~95% opacity
+theme.bg_focus      = "#d0d2d1"--"#535d6c"
 theme.bg_urgent     = "#ff0000"
 theme.bg_minimize   = "#444444"
 theme.bg_systray    = theme.bg_normal
 
-theme.fg_normal     = "#d8dee9" --"#aaaaaa"
-theme.fg_focus      = "#2e3440" --"#ffffff"
+theme.fg_normal     = "#d0d2d1" --"#aaaaaa"
+theme.fg_focus      = "#17191a" --"#ffffff"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
 
-theme.useless_gap   =  dpi(3)
-theme.border_width  = dpi(2)
+theme.useless_gap   =  dpi(1)
+theme.border_width  = dpi(1)
 theme.border_normal = "#3b4252"
 theme.border_focus  = "#d8dee9"
 theme.border_marked = "#91231c"
@@ -36,7 +36,8 @@ theme.tasklist_disable_task_name = true
 -- defined, the sets are:
 -- taglist_[bg|fg]_[focus|urgent|occupied|empty|volatile]
 -- tasklist_[bg|fg]_[focus|urgent]
--- titlebar_[bg|fg]_[normal|focus]
+theme.titlebar_bg_focus = "#17191a"
+theme.titlebar_fg_focus = "#d0d2d1"
 -- tooltip_[font|opacity|fg_color|bg_color|border_width|border_color]
 -- mouse_finder_[color|timeout|animate_timeout|radius|factor]
 -- prompt_[fg|bg|fg_cursor|bg_cursor|font]

@@ -3,9 +3,9 @@ if status is-interactive
 end
 
 alias vim="nvim"
-
-alias monitor-left="xrandr --output LVDS1 --auto --left-of HDMI1"
-alias monitor-right="xrandr --output LVDS1 --auto --right-of HDMI1"
+alias g14="g++ -std=c++14 -Wall -g"
+alias g17="g++ -std=c++17 -Wall -g"
+alias gst="gst ~/.config/floatfix.st"
 alias spot="LD_PRELOAD=/usr/lib/spotify-adblock.so spotify &"
 set -Ux EDITOR nvim
 set -U fish_user_paths (ruby -e 'puts Gem.user_dir')/bin
@@ -17,3 +17,6 @@ if status is-login
 		exec startx -- -keeptty
 	end
 end
+
+# opam configuration
+source /home/austin/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true

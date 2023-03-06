@@ -296,15 +296,15 @@ awful.screen.connect_for_each_screen(function(s)
 
     s.mytags = wibox {
         screen = s,
-        width = 110,
-        height = 30,
+        width = 100,
+        height = 20,
         x = s.geometry.x + beautiful.useless_gap,
         y = s.geometry.y + beautiful.useless_gap,
         ontop = false,
         visible = true,
-        shape = function(cr,w,h)
+        --[[shape = function(cr,w,h)
             gears.shape.rounded_rect(cr,w,h,6)
-        end,
+        end,--]]
         border_width = beautiful.border_width,
         border_color = beautiful.border_normal
     }
@@ -314,7 +314,7 @@ awful.screen.connect_for_each_screen(function(s)
         widget = wibox.container.margin,
     }
     s.mytags:struts {
-        top = s.mytags.height + s.mytags.y + s.mytags.border_width
+        top = s.mytags.height + s.mytags.y + 2 * s.mytags.border_width
     }
 
     s.mytasks = wibox {
@@ -325,9 +325,9 @@ awful.screen.connect_for_each_screen(function(s)
         y = s.mytags.y,
         ontop = false,
         visible = true,
-        shape = function(cr,w,h)
+        --[[shape = function(cr,w,h)
             gears.shape.rounded_rect(cr,w,h,6)
-        end,
+        end,--]]
         border_width = beautiful.border_width,
         border_color = beautiful.border_normal
     }
@@ -344,9 +344,9 @@ awful.screen.connect_for_each_screen(function(s)
         y = s.mytasks.y,
         ontop = false,
         visible = true,
-        shape = function(cr,w,h)
+        --[[shape = function(cr,w,h)
             gears.shape.rounded_rect(cr,w,h,6)
-        end,
+        end,--]]
         border_width = beautiful.border_width,
         border_color = beautiful.border_normal,
         widget = {
@@ -377,15 +377,15 @@ awful.screen.connect_for_each_screen(function(s)
 
    s.mylayout = wibox {
         screen = s,
-        width = 30,
+        width = s.mytags.height,
         height = s.mytags.height,
-        x = s.geometry.width - (30 + beautiful.useless_gap + 2 * beautiful.border_width),
+        x = s.geometry.width - (s.mytags.height + beautiful.useless_gap + 2 * beautiful.border_width),
         y = s.mytags.y,
         ontop = false,
         visible = true,
-        shape = function(cr,w,h)
+        --[[shape = function(cr,w,h)
             gears.shape.rounded_rect(cr,w,h,6)
-        end,
+        end,--]]
         border_width = beautiful.border_width,
         border_color = beautiful.border_normal,
    }
@@ -403,9 +403,9 @@ awful.screen.connect_for_each_screen(function(s)
        y = s.mytags.y,
        ontop = false,
        visible = true,
-       shape = function(cr,w,h)
+       --[[shape = function(cr,w,h)
            gears.shape.rounded_rect(cr,w,h,6)
-       end,
+       end,--]]
        border_width = beautiful.border_width,
        border_color = beautiful.border_normal,
    }
@@ -610,7 +610,9 @@ clientkeys = gears.table.join(
               {description = "move to master", group = "client"}),
     awful.key({ modkey,           }, "o",      function (c) c:move_to_screen()               end,
               {description = "move to screen", group = "client"}),
-    awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end,
+    awful.key({ modkey,           }, "t",      function (c)
+        c.ontop = not c.ontop
+    end,
               {description = "toggle keep on top", group = "client"}),
     awful.key({ modkey,           }, "n",
         function (c)
@@ -638,11 +640,11 @@ clientkeys = gears.table.join(
         end ,
         {description = "(un)maximize horizontally", group = "client"})
 )
-client.connect_signal("manage",
+--[[client.connect_signal("manage",
     function (c)
         c.shape = function(cr,w,h) gears.shape.rounded_rect(cr,w,h,8) end
     end
-)
+)--]]
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it work on any keyboard layout.
 -- This should map on the top row of your keyboard, usually 1 to 9.
@@ -752,7 +754,8 @@ awful.rules.rules = {
           "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
           "Wpa_gui",
           "veromix",
-          "xtightvncviewer"},
+          "xtightvncviewer",
+          "TeamViewer"},
 
         -- Note that the name property shown in xprop might be set slightly after creation of the client
         -- and the name shown there might not match defined rules here.
@@ -767,8 +770,9 @@ awful.rules.rules = {
       }, properties = { floating = true }},
 
     -- Add titlebars to normal clients and dialogs
-    { rule_any = {type = { "normal", "dialog" }
-      }, properties = {titlebars_enabled = true }
+    { rule_any = {
+        type = { "normal", "dialog" }
+    }, properties = {titlebars_enabled = true }
     },
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
@@ -806,42 +810,96 @@ client.connect_signal("request::titlebars", function(c)
         end)
     )
 
-    awful.titlebar(c) : setup {
+    local close_btn = wibox.container.background(
+        awful.titlebar.widget.closebutton(c)
+    )
+    close_btn:connect_signal("mouse::enter", function(w)
+        w.bg = "#FF0000"
+    end)
+    close_btn:connect_signal("mouse::leave", function(w)
+        w.bg = beautiful.bg_normal
+    end)
+
+    local min_btn = wibox.container.background(
+        awful.titlebar.widget.minimizebutton(c)
+    )
+    min_btn:connect_signal("mouse::enter", function(w)
+        w.bg = beautiful.bg_minimize
+    end)
+    min_btn:connect_signal("mouse::leave", function(w)
+        w.bg = beautiful.bg_normal
+    end)
+
+    local max_btn = wibox.container.background(
+        awful.titlebar.widget.maximizedbutton(c)
+    )
+    max_btn:connect_signal("mouse::enter", function(w)
+        w.bg = beautiful.bg_minimize
+    end)
+    max_btn:connect_signal("mouse::leave", function(w)
+        w.bg = beautiful.bg_normal
+    end)
+
+
+    awful.titlebar(c,
+        {
+            size = 20,
+        }
+    ) : setup {
         { -- Left
-            awful.titlebar.widget.iconwidget(c),
+            {
+                awful.titlebar.widget.iconwidget(c),
+                margins = 2,
+                widget = wibox.container.margin
+            },
             buttons = buttons,
             layout  = wibox.layout.fixed.horizontal
         },
         { -- Middle
             { -- Title
-                align  = "center",
-                widget = awful.titlebar.widget.titlewidget(c)
+                {
+                    font = "NotoSans Nerd Font 8",
+                    widget = awful.titlebar.widget.titlewidget(c),
+                },
+                left = 5,
+                widget = wibox.container.margin
             },
             buttons = buttons,
             layout  = wibox.layout.flex.horizontal
         },
         { -- Right
-            awful.titlebar.widget.floatingbutton (c),
-            awful.titlebar.widget.maximizedbutton(c),
-            awful.titlebar.widget.stickybutton   (c),
-            awful.titlebar.widget.ontopbutton    (c),
-            awful.titlebar.widget.closebutton    (c),
-            layout = wibox.layout.fixed.horizontal()
+            min_btn,
+            --awful.titlebar.widget.floatingbutton (c),
+            max_btn,
+            --awful.titlebar.widget.stickybutton   (c),
+            --awful.titlebar.widget.ontopbutton    (c),
+            close_btn,
+            layout = wibox.layout.fixed.horizontal
         },
         layout = wibox.layout.align.horizontal
     }
 end)
 
 client.connect_signal("manage", function (c)
-    if c.floating then
+    if c.floating or c.first_tag.layout.name == "floating" then
         awful.titlebar.show(c)
+        c.height = c.height - 20
     else
         awful.titlebar.hide(c)
-    end   
+    end
+    --naughty.notify({text=tostring(c.floating)})
+
+    -- weird thing w/ teamviewer, doesn't want to go under other windows
+    if c.class == "TeamViewer" then
+        c.ontop = not c.ontop
+        c.ontop = not c.ontop
+    end
 end)
+
 client.connect_signal("property::floating", function(c)
     if c.floating then
         awful.titlebar.show(c)
+        c.height = c.height - 20
     else
         awful.titlebar.hide(c)
     end
@@ -852,6 +910,7 @@ tag.connect_signal("property::layout", function(t)
     for k,c in pairs(clients) do
         if c.floating or c.first_tag.layout.name == "floating" then
             awful.titlebar.show(c)
+            c.height = c.height - 20
         else
             awful.titlebar.hide(c)
         end

@@ -66,6 +66,7 @@ require('packer').startup(function(use)
         'nvim-telescope/telescope.nvim', tag = '0.1.0',
         requires = { {'nvim-lua/plenary.nvim'} }
     }
+    use {'romgrk/barbar.nvim', requires = 'nvim-web-devicons'} -- better tabs
     if packer_bootstrap then
         require('packer').sync() -- bootstrapping
     end
@@ -89,7 +90,7 @@ vim.api.nvim_set_keymap("n", "<Tab>", ">>", {noremap = true})
 vim.api.nvim_set_keymap("n", "<S-Tab>", "<<", {noremap = true})
     -- for ctrl-s saves
 vim.api.nvim_set_keymap("n", "<C-s>", ":w<CR>", {noremap = true}) 
-vim.api.nvim_set_keymap("i", "<C-s>", "<Esc>:w<CR>a", {noremap = true})
+vim.api.nvim_set_keymap("i", "<C-s>", "<Esc>:w<CR>", {noremap = true})
     -- for ctrl-v paste 
 vim.keymap.set("n", "<C-v>", "\"+p", {noremap = true})
 vim.keymap.set("i", "<C-v>", "<Esc>\"+pa", {noremap = true})
@@ -109,10 +110,14 @@ vim.g.material_style = "darker"
 vim.cmd 'colorscheme material'
 vim.cmd 'highlight Normal guibg=NONE ctermbg=NONE' --TRANSPARENT BG
 vim.cmd 'highlight EndOfBuffer guibg=None ctermbg=None' -- TRANSPARENT EOB
- 
+
+require("material").setup({
+    lualine_style = 'stealth'
+})
+
 -- LUALINE
 require('lualine').setup {
-    options = {theme = 'auto'},
+    options = {theme = 'material'},
     extensions = {'fugitive'}
 }
 
@@ -120,7 +125,6 @@ require('lualine').setup {
 require("scrollbar").setup()
 
 -- TREESITTER
-
 --  uses separate parser from https://github.com/vantreeseba/tree-sitter-haxe
 --  since no support in official nvim-treesitter yet.
 local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
@@ -167,7 +171,7 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 local lspconfig = require('lspconfig')
-local servers = {"sumneko_lua", "tsserver", "jdtls", "clangd", "ocamllsp"} -- SERVERS HERE
+local servers = {"sumneko_lua", "tsserver", "jdtls", "ocamllsp", --[["clangd"--]]} -- SERVERS HERE
 for _, server in ipairs(servers) do
     lspconfig[server].setup {
         capabilities = capabilities
@@ -180,6 +184,7 @@ lspconfig["haxe_language_server"].setup({
 })
 
 -- CMP
+local luasnip = require('luasnip')
 local cmp = require('cmp')
 cmp.setup({
     snippet = {
@@ -194,7 +199,26 @@ cmp.setup({
         ['<C-Space>'] = cmp.mapping.complete(),
         ['<C-e>'] = cmp.mapping.abort(),
         -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-        ['<CR>'] = cmp.mapping.confirm({select = false}),
+        ['<CR>'] = cmp.mapping.confirm({select = true}),
+        ['<Tab>'] = function(fallback)
+            if cmp.visible() then
+                cmp.select_next_item()
+            elseif luasnip.expand_or_jumpable() then
+                luasnip.expand_or_jump()
+            else
+                fallback()
+            end
+        end,
+        ['<S-Tab>'] = function(fallback)
+            if cmp.visible() then
+                cmp.select_prev_item()
+            elseif luasnip.jumpable(-1) then
+                luasnip.jump(-1)
+            else
+                fallback()
+            end
+        end,
+        ['<Esc>'] = cmp.mapping.abort()
     }),
     sources = cmp.config.sources({
         {name = 'nvim_lsp'},
@@ -230,3 +254,8 @@ cmp.event:on(
 
 -- COLORIZER
 require('colorizer').setup()
+
+-- BARBAR
+require('bufferline').setup({
+    icons=false
+})
