@@ -168,10 +168,10 @@ require('mason-lspconfig').setup({
 
 -- LSPCONFIG
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 local lspconfig = require('lspconfig')
-local servers = {"sumneko_lua", "tsserver", "jdtls", "ocamllsp", --[["clangd"--]]} -- SERVERS HERE
+local servers = {"lua_ls", "tsserver", "jdtls", "ocamllsp", --[["clangd"--]]} -- SERVERS HERE
 for _, server in ipairs(servers) do
     lspconfig[server].setup {
         capabilities = capabilities
@@ -199,7 +199,7 @@ cmp.setup({
         ['<C-Space>'] = cmp.mapping.complete(),
         ['<C-e>'] = cmp.mapping.abort(),
         -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-        ['<CR>'] = cmp.mapping.confirm({select = true}),
+        ['<CR>'] = cmp.mapping.confirm({select = false}),
         ['<Tab>'] = function(fallback)
             if cmp.visible() then
                 cmp.select_next_item()
@@ -218,7 +218,7 @@ cmp.setup({
                 fallback()
             end
         end,
-        ['<Esc>'] = cmp.mapping.abort()
+        --['<Esc>'] = cmp.mapping.abort()
     }),
     sources = cmp.config.sources({
         {name = 'nvim_lsp'},
