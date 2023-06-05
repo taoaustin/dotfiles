@@ -149,41 +149,12 @@ function bars.create(s)
         }
     }
 
-    -- Create the wibox
---    s.mywibar = awful.wibar({
---        position = "top",
---        screen = s,
---        border_width = beautiful.border_width,
---        border_color = beautiful.border_normal,
---        shape = function(cr,w,h) gears.shape.rounded_rect(cr,w,h,8) end,
---    })
-
---    -- Add widgets to the wibox
---    s.mywibar:setup {
---        layout = wibox.layout.align.horizontal,
---        { -- Left widgets
---            layout = wibox.layout.fixed.horizontal,
---            --mylauncher,
---            s.mytaglist,
---            s.mypromptbox,
---        },
---        s.mytasklist, -- Middle widget
---        { -- Right widgets
---            layout = wibox.layout.fixed.horizontal,
---            --mykeyboardlayout,
---            wibox.widget.systray(),
---            mytextclock,
---            bat.widget,
---            s.mylayoutbox,
---        },
---    }
-
     s.mytags = wibox {
         screen = s,
         width = 100,
         height = 20,
         x = s.geometry.x + beautiful.useless_gap,
-        y = s.geometry.y + beautiful.useless_gap,
+        y = s.geometry.y + 2 * beautiful.useless_gap,
         ontop = false,
         visible = true,
         --[[shape = function(cr,w,h)
@@ -198,7 +169,7 @@ function bars.create(s)
         widget = wibox.container.margin,
     }
     s.mytags:struts {
-        top = s.mytags.height + s.mytags.y + 2 * s.mytags.border_width
+        top = s.mytags.height + s.mytags.y +  s.mytags.border_width
     }
 
     s.mytasks = wibox {
@@ -221,49 +192,11 @@ function bars.create(s)
         widget = wibox.container.margin
     }
 
-    s.mypromptpopup = awful.popup {
-        screen = s,
-        minimum_height = s.mytasks.height,
-        x = s.mytasks.x + s.mytasks.width + (beautiful.useless_gap + (2 * beautiful.border_width)),
-        y = s.mytasks.y,
-        ontop = false,
-        visible = true,
-        --[[shape = function(cr,w,h)
-            gears.shape.rounded_rect(cr,w,h,6)
-        end,--]]
-        border_width = beautiful.border_width,
-        border_color = beautiful.border_normal,
-        widget = {
-            s.mypromptbox,
-            margins = beautiful.useless_gap,
-            widget = wibox.container.margin
-        }
-    }
-
-    s.mydatetime = wibox {
-        screen = s,
-        width = 200,
-        height = s.mytags.height,
-        x = (s.geometry.width / 2) - (200 / 2),
-        y = s.mytags.y,
-        ontop = false,
-        visible = true,
-        bg = "#FFFFFF00",
-        fg = beautiful.bg_focus,
-    }
-    s.mydatetime:setup {
-        {
-            mytextclock,
-            layout = wibox.layout.flex.horizontal
-        },
-        widget = wibox.container.place
-    }
-
    s.mylayout = wibox {
         screen = s,
         width = s.mytags.height,
         height = s.mytags.height,
-        x = s.geometry.width - (s.mytags.height + beautiful.useless_gap + 2 * beautiful.border_width),
+        x = s.geometry.x + s.geometry.width - s.mytags.height - beautiful.useless_gap - (2 * beautiful.border_width),
         y = s.mytags.y,
         ontop = false,
         visible = true,
@@ -313,6 +246,51 @@ function bars.create(s)
        right = 6,
        widget = wibox.container.margin
    }
+
+    s.mydatetime = wibox {
+        screen = s,
+        width = s.systemutilities.x -
+            (s.mytasks.x + s.mytasks.width) -
+            (2 * beautiful.useless_gap) -
+            (4 * beautiful.border_width),
+        --width = 200,
+        height = s.mytags.height,
+        x = s.mytasks.x + s.mytasks.width + (beautiful.useless_gap + (2 * beautiful.border_width)),
+        --x = (s.geometry.width / 2) - (200 / 2),
+        y = s.mytags.y,
+        ontop = false,
+        visible = true,
+        bg = beautiful.bg_normal,--"#FFFFFF00",
+        fg = beautiful.bg_focus,
+        border_width = beautiful.border_width,
+        border_color = beautiful.border_normal,
+    }
+    s.mydatetime:setup {
+        {
+            mytextclock,
+            layout = wibox.layout.flex.horizontal
+        },
+        widget = wibox.container.place
+    }
+
+    s.mypromptpopup = awful.popup {
+        screen = s,
+        minimum_height = s.mytasks.height,
+        maximum_height = s.mytasks.height,
+        x = s.mytasks.x + s.mytasks.width + (beautiful.useless_gap + (3 * beautiful.border_width)),
+        y = s.mytasks.y + beautiful.border_width,
+        ontop = false,
+        visible = true,
+        --[[shape = function(cr,w,h)
+            gears.shape.rounded_rect(cr,w,h,6)
+        end,--]]
+        widget = {
+            s.mypromptbox,
+            margins = beautiful.useless_gap,
+            widget = wibox.container.margin
+        }
+    }
+
 end
 
 return bars

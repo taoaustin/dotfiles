@@ -22,8 +22,8 @@ client.connect_signal("manage", function (c)
         awful.titlebar.hide(c)
     end
 
-    --c.shape = function(cr,w,h) gears.shape.rounded_rect(cr,w,h,8) end
-    
+    -- c.shape = function(cr,w,h) gears.shape.rounded_rect(cr,w,h,6) end
+
     -- weird thing w/ teamviewer, doesn't want to go under other windows
     if c.class == "TeamViewer" then
         c.ontop = not c.ontop
