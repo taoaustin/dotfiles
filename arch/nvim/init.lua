@@ -34,7 +34,7 @@ require('packer').startup(function(use)
     use 'sainnhe/everforest' -- colorscheme
     use {
         'nvim-lualine/lualine.nvim', -- statusline
-        requires = { 'kyazdani42/nvim-web-devicons', opt = true } --cute ol' icons
+        requires = { 'nvim-tree/nvim-web-devicons', opt = true }
     }
     use {
         'nvim-treesitter/nvim-treesitter', -- more syntax highlighting
@@ -43,9 +43,16 @@ require('packer').startup(function(use)
         end
     }
     use 'neovim/nvim-lspconfig' -- allows easy LSP configuration
-    use {
-        'glepnir/lspsaga.nvim', -- extra LSP utils? for UI stuff
-        branch = 'main',
+    use 'nvim-tree/nvim-web-devicons'
+    use{
+        "glepnir/lspsaga.nvim",  -- extra LSP utils? for UI stuff
+        branch = "main",
+        event = "LspAttach",
+        requires = {
+            {"nvim-tree/nvim-web-devicons"},
+            --Please make sure you install markdown and markdown_inline parser
+            {"nvim-treesitter/nvim-treesitter"}
+        }
     }
     use 'hrsh7th/nvim-cmp' -- autocomplete
     use 'hrsh7th/cmp-nvim-lsp' -- use LSP as autocomplete source
@@ -67,6 +74,7 @@ require('packer').startup(function(use)
         requires = { {'nvim-lua/plenary.nvim'} }
     }
     use {'romgrk/barbar.nvim', requires = 'nvim-web-devicons'} -- better tabs
+    use 'tpope/vim-commentary' -- vscode-like commenting
     if packer_bootstrap then
         require('packer').sync() -- bootstrapping
     end
@@ -101,13 +109,21 @@ vim.keymap.set('n', '<leader>fg', builtin.live_grep, {noremap = true})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {noremap = true})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {noremap = true})
 
+    -- for ctrl-/ commenting "_" maps to "/" for some reason
+vim.keymap.set("n", "<C-_>", ":Commentary<CR>", {noremap = true})
+vim.keymap.set("i", "<C-_>", "<Esc>:Commentary<CR>a", {noremap = true})
+vim.keymap.set("v", "<C-_>", ":Commentary<CR>gv", {noremap = true})
 
+    -- for lspsaga binds
 vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>")
 vim.keymap.set("n","gd", "<cmd>Lspsaga goto_definition<CR>")
+vim.keymap.set("n","<leader>E", "<cmd>Lspsaga show_cursor_diagnostics<CR>")
 
 -- SET COLORSCHEME
 vim.g.material_style = "darker"
 vim.cmd 'colorscheme material'
+
+
 vim.cmd 'highlight Normal guibg=NONE ctermbg=NONE' --TRANSPARENT BG
 vim.cmd 'highlight EndOfBuffer guibg=None ctermbg=None' -- TRANSPARENT EOB
 
@@ -171,7 +187,7 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 local lspconfig = require('lspconfig')
-local servers = {"lua_ls", "tsserver", "jdtls", "ocamllsp", --[["clangd"--]]} -- SERVERS HERE
+local servers = {"lua_ls", "tsserver", "jdtls", "ocamllsp", "clangd"}  -- SERVERS HERE
 for _, server in ipairs(servers) do
     lspconfig[server].setup {
         capabilities = capabilities
@@ -259,3 +275,5 @@ require('colorizer').setup()
 require('bufferline').setup({
     icons=false
 })
+
+require('lspsaga').setup()
