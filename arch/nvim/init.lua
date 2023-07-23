@@ -5,7 +5,7 @@ opt.background="dark"
 opt.termguicolors=true
 opt.clipboard={"unnamedplus", "unnamed"}
 opt.cursorline=true
-opt.mouse="nv" -- only Normal&Visual b/c palm keeps clicking touchpad mouse in insert mode 
+opt.mouse="nvi"
 opt.number=true
 opt.title=true
 opt.expandtab=true
@@ -31,7 +31,6 @@ local packer_bootstrap = ensure_packer()
 -- LOAD PLUG-INS
 require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'  -- manages itself, nvim package manager
-    use 'sainnhe/everforest' -- colorscheme
     use {
         'nvim-lualine/lualine.nvim', -- statusline
         requires = { 'nvim-tree/nvim-web-devicons', opt = true }
@@ -44,10 +43,9 @@ require('packer').startup(function(use)
     }
     use 'neovim/nvim-lspconfig' -- allows easy LSP configuration
     use 'nvim-tree/nvim-web-devicons'
-    use{
-        "glepnir/lspsaga.nvim",  -- extra LSP utils? for UI stuff
+    use {
+        "glepnir/lspsaga.nvim",
         branch = "main",
-        event = "LspAttach",
         requires = {
             {"nvim-tree/nvim-web-devicons"},
             --Please make sure you install markdown and markdown_inline parser
@@ -69,12 +67,18 @@ require('packer').startup(function(use)
     use 'petertriho/nvim-scrollbar' -- shows a scrollbar + extra
     use 'norcalli/nvim-colorizer.lua' -- highlights hex color w/ its color
     use 'marko-cerovac/material.nvim' -- colorscheme
+    use 'sainnhe/everforest' -- colorscheme
+    use 'sainnhe/sonokai' -- colorscheme
+    use 'yonlu/omni.vim' -- colorscheme
+    use 'yazeed1s/oh-lucy.nvim' --colorscheme
+    use 'savq/melange-nvim'
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.0',
         requires = { {'nvim-lua/plenary.nvim'} }
     }
     use {'romgrk/barbar.nvim', requires = 'nvim-web-devicons'} -- better tabs
     use 'tpope/vim-commentary' -- vscode-like commenting
+    use 'lukas-reineke/indent-blankline.nvim' -- indentation level
     if packer_bootstrap then
         require('packer').sync() -- bootstrapping
     end
@@ -121,8 +125,11 @@ vim.keymap.set("n","<leader>E", "<cmd>Lspsaga show_cursor_diagnostics<CR>")
 
 -- SET COLORSCHEME
 vim.g.material_style = "darker"
-vim.cmd 'colorscheme material'
-
+vim.g.sonokai_style = "default"
+--vim.cmd 'colorscheme material'
+--vim.cmd 'colorscheme oh-lucy-evening'
+--vim.cmd 'colorscheme omni'
+vim.cmd 'colorscheme melange'
 
 vim.cmd 'highlight Normal guibg=NONE ctermbg=NONE' --TRANSPARENT BG
 vim.cmd 'highlight EndOfBuffer guibg=None ctermbg=None' -- TRANSPARENT EOB
@@ -133,7 +140,7 @@ require("material").setup({
 
 -- LUALINE
 require('lualine').setup {
-    options = {theme = 'material'},
+    options = {theme = 'auto'},
     extensions = {'fugitive'}
 }
 
@@ -273,7 +280,20 @@ require('colorizer').setup()
 
 -- BARBAR
 require('bufferline').setup({
-    icons=false
+    icons = { filetype = { enabled = false } }
 })
 
 require('lspsaga').setup()
+
+-- TELESCOPE
+require ('telescope').setup({
+    pickers = {
+        colorscheme = {
+            enable_preview = true
+        }
+    }
+})
+
+require ('indent_blankline').setup()
+
+

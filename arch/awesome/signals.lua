@@ -76,7 +76,7 @@ client.connect_signal("request::titlebars", function(c)
     end)
 
 
-    awful.titlebar(c, {size = 20}) : setup {
+    awful.titlebar(c, {size = 25}) : setup {
         { -- Left
             {
                 awful.titlebar.widget.iconwidget(c),
@@ -89,7 +89,7 @@ client.connect_signal("request::titlebars", function(c)
         { -- Middle
             { -- Title
                 {
-                    font = "NotoSans Nerd Font 8",
+                    font = "NotoSans Nerd Font 9",
                     widget = awful.titlebar.widget.titlewidget(c),
                 },
                 left = 5,

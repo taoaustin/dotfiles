@@ -99,7 +99,7 @@ function bars.create(s)
         screen  = s,
         filter  = awful.widget.taglist.filter.all,
         buttons = taglist_buttons,
-        style = {shape = gears.shape.circle},
+        style = {shape = function(cr,w,h) gears.shape.rounded_rect(cr,w,h,8) end},
         layout = {layout = wibox.layout.flex.horizontal},
         widget_template =
         {
@@ -120,7 +120,7 @@ function bars.create(s)
         screen  = s,
         filter  = awful.widget.tasklist.filter.currenttags,
         buttons = tasklist_buttons,
-        style = {shape = function(cr,w,h) gears.shape.rounded_rect(cr,w,h,6) end},
+        style = {shape = function(cr,w,h) gears.shape.rounded_rect(cr,w,h,4) end},
         layout = {
             max_widget_size = 35,
             layout = wibox.layout.flex.horizontal},
@@ -153,8 +153,8 @@ function bars.create(s)
         screen = s,
         width = 100,
         height = 20,
-        x = s.geometry.x + beautiful.useless_gap,
-        y = s.geometry.y + 2 * beautiful.useless_gap,
+        x = s.geometry.x + 2 * beautiful.useless_gap,
+        y = s.geometry.y,
         ontop = false,
         visible = true,
         --[[shape = function(cr,w,h)
@@ -169,7 +169,7 @@ function bars.create(s)
         widget = wibox.container.margin,
     }
     s.mytags:struts {
-        top = s.mytags.height + s.mytags.y +  s.mytags.border_width
+        top = s.mytags.height + s.mytags.y + beautiful.useless_gap
     }
 
     s.mytasks = wibox {
@@ -196,7 +196,7 @@ function bars.create(s)
         screen = s,
         width = s.mytags.height,
         height = s.mytags.height,
-        x = s.geometry.x + s.geometry.width - s.mytags.height - beautiful.useless_gap - (2 * beautiful.border_width),
+        x = s.geometry.x + s.geometry.width - s.mytags.height - (2 * beautiful.border_width) - (2 * beautiful.useless_gap),
         y = s.mytags.y,
         ontop = false,
         visible = true,
