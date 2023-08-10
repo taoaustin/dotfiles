@@ -102,7 +102,7 @@ vim.api.nvim_set_keymap("n", "<Tab>", ">>", {noremap = true})
 vim.api.nvim_set_keymap("n", "<S-Tab>", "<<", {noremap = true})
     -- for ctrl-s saves
 vim.api.nvim_set_keymap("n", "<C-s>", ":w<CR>", {noremap = true}) 
-vim.api.nvim_set_keymap("i", "<C-s>", "<Esc>:w<CR>", {noremap = true})
+vim.keymap.set({"i", "v"}, "<C-s>", "<Esc>:w<CR>", {noremap = true})
     -- for ctrl-v paste 
 vim.keymap.set("n", "<C-v>", "\"+p", {noremap = true})
 vim.keymap.set("i", "<C-v>", "<Esc>\"+pa", {noremap = true})
@@ -152,17 +152,13 @@ require("scrollbar").setup()
 --  since no support in official nvim-treesitter yet.
 local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
 parser_config.haxe = {
-    install_info = {
-        url = "~/repos/tree-sitter-haxe", -- local path or git repo
-        files = {"src/parser.c"},
-        -- optional entries:
-
-        -- if stand-alone parser without npm dependencies
-        generate_requires_npm = false,
-
-        -- if folder contains pre-generated src/parser.c
-        requires_generate_from_grammar = false,
-    },
+  install_info = {
+    url = "https://github.com/vantreeseba/tree-sitter-haxe",
+    files = {"src/parser.c"},
+    -- optional entries:
+    branch = "main",
+  },
+  filetype = "haxe",
 }
 
 require('nvim-treesitter.configs').setup {

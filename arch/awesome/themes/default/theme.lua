@@ -16,7 +16,7 @@ theme.font          = "NotoMono Nerd Font 10"--"sans 8"
 theme.bg_normal     = "#292522"
 theme.bg_focus      = "#ECE1D7"
 theme.bg_urgent     = "#ff0000"
-theme.bg_minimize   = "#444444"
+theme.bg_minimize   = "#696664"
 theme.bg_systray    = theme.bg_normal
 
 theme.fg_normal     = "#ECE1D7"
@@ -39,6 +39,7 @@ theme.tasklist_disable_task_name = true
 theme.titlebar_bg_normal = "#151311"
 theme.titlebar_bg_focus = "#191614"
 theme.titlebar_fg_focus = "#ECE1D7"
+theme.tasklist_bg_normal = "#3e3b38"
 -- tooltip_[font|opacity|fg_color|bg_color|border_width|border_color]
 -- mouse_finder_[color|timeout|animate_timeout|radius|factor]
 -- prompt_[fg|bg|fg_cursor|bg_cursor|font]

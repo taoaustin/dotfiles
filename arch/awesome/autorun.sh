@@ -10,4 +10,4 @@ run() {
 #run picom -b
 run autorandr --change
 run blueman-applet
-#run pulseaudio &
+run pulseaudio &

@@ -33,6 +33,14 @@ local cpu = lain.widget.cpu({
         end
 })
 
+local cpu_temp = lain.widget.temp({
+    settings =
+        function ()
+            local temp = string.format("(%2d 糖)", coretemp_now)
+            widget:set_markup(temp)
+        end
+})
+
 local taglist_buttons = gears.table.join(
     awful.button({}, 1, function(t) t:view_only() end),
     awful.button({modkey}, 1, 
@@ -192,7 +200,7 @@ function bars.create(s)
         widget = wibox.container.margin
     }
 
-   s.mylayout = wibox {
+    s.mylayout = wibox {
         screen = s,
         width = s.mytags.height,
         height = s.mytags.height,
@@ -205,47 +213,52 @@ function bars.create(s)
         end,--]]
         border_width = beautiful.border_width,
         border_color = beautiful.border_normal,
-   }
-   s.mylayout:setup {
-       s.mylayoutbox,
-       margins = beautiful.useless_gap,
-       widget = wibox.container.margin
-   }
+    }
+    s.mylayout:setup {
+        s.mylayoutbox,
+        margins = beautiful.useless_gap,
+        widget = wibox.container.margin
+    }
 
-   s.systemutilities = wibox {
-       screen = s,
-       width = 300,
-       height = s.mytags.height,
-       x = s.mylayout.x - (300 + beautiful.useless_gap + (2 * beautiful.border_width)),
-       y = s.mytags.y,
-       ontop = false,
-       visible = true,
-       --[[shape = function(cr,w,h)
-           gears.shape.rounded_rect(cr,w,h,6)
-       end,--]]
-       border_width = beautiful.border_width,
-       border_color = beautiful.border_normal,
-   }
-   s.systemutilities:setup {
-       {
-           {
-               wibox.widget.systray(),
-               cpu.widget,
-               bat.widget,
-               widget = wibox.container.place,
-               spacing = 16,
-               spacing_widget = wibox.widget.separator,
-               layout = wibox.layout.fixed.horizontal
-           },
-           halign = "right",
-           widget = wibox.container.place
-       },
-       top = beautiful.useless_gap,
-       bottom = beautiful.useless_gap,
-       left = 6,
-       right = 6,
-       widget = wibox.container.margin
-   }
+    s.systemutilities = wibox {
+        screen = s,
+        width = 300,
+        height = s.mytags.height,
+        x = s.mylayout.x - (300 + beautiful.useless_gap + (2 * beautiful.border_width)),
+        y = s.mytags.y,
+        ontop = false,
+        visible = true,
+        --[[shape = function(cr,w,h)
+            gears.shape.rounded_rect(cr,w,h,6)
+        end,--]]
+        border_width = beautiful.border_width,
+        border_color = beautiful.border_normal,
+    }
+    s.systemutilities:setup {
+        {
+            {
+                wibox.widget.systray(),
+                {
+                    cpu.widget,
+                    cpu_temp.widget,
+                    layout = wibox.layout.fixed.horizontal,
+                    spacing = 8
+                },
+                bat.widget,
+                widget = wibox.container.place,
+                spacing = 16,
+                spacing_widget = wibox.widget.separator,
+                layout = wibox.layout.fixed.horizontal
+            },
+            halign = "right",
+            widget = wibox.container.place
+        },
+        top = beautiful.useless_gap,
+        bottom = beautiful.useless_gap,
+        left = 6,
+        right = 6,
+        widget = wibox.container.margin
+    }
 
     s.mydatetime = wibox {
         screen = s,

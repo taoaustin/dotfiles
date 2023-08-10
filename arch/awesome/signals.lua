@@ -52,7 +52,7 @@ client.connect_signal("request::titlebars", function(c)
         w.bg = "#FF0000"
     end)
     close_btn:connect_signal("mouse::leave", function(w)
-        w.bg = beautiful.bg_normal
+        w.bg = ""
     end)
 
     local min_btn = wibox.container.background(
@@ -62,7 +62,7 @@ client.connect_signal("request::titlebars", function(c)
         w.bg = beautiful.bg_minimize
     end)
     min_btn:connect_signal("mouse::leave", function(w)
-        w.bg = beautiful.bg_normal
+        w.bg = ""
     end)
 
     local max_btn = wibox.container.background(
@@ -72,7 +72,7 @@ client.connect_signal("request::titlebars", function(c)
         w.bg = beautiful.bg_minimize
     end)
     max_btn:connect_signal("mouse::leave", function(w)
-        w.bg = beautiful.bg_normal
+        w.bg = ""
     end)
 
 
@@ -118,7 +118,7 @@ client.connect_signal("property::floating", function(c)
 
     if c.floating then
         awful.titlebar.show(c)
-        c.height = c.height - 20
+        c.height = c.height - 25
     else
         awful.titlebar.hide(c)
     end
