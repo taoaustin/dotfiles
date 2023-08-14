@@ -1,11 +1,15 @@
 -- keys & buttons, technically
 local gears = require("gears")
 local awful = require("awful")
+local lain = require("lain")
+local naughty = require("naughty")
 local hotkeys_popup = require("awful.hotkeys_popup")
 
 local modkey = "Mod4"
 local altkey = "Mod1"
 local keys = {}
+
+local pulsebar = lain.widget.pulsebar()
 
 keys.globalkeys = gears.table.join(
     ---------------------------
@@ -18,10 +22,28 @@ keys.globalkeys = gears.table.join(
         function() awful.spawn("brightnessctl set 3%-") end
     ),
     awful.key({}, "XF86AudioRaiseVolume",
-    	function() awful.spawn("pactl set-sink-volume @DEFAULT_SINK@ +3%") end
+    	function()
+            awful.spawn("pactl set-sink-volume @DEFAULT_SINK@ +3%")
+            pulsebar.notify()
+        end
     ),
     awful.key({}, "XF86AudioLowerVolume",
-    	function() awful.spawn("pactl set-sink-volume @DEFAULT_SINK@ -3%") end
+    	function()
+            awful.spawn("pactl set-sink-volume @DEFAULT_SINK@ -3%")
+            pulsebar.notify()
+        end
+    ),
+    awful.key({modkey, "Control"}, "Up",
+    	function()
+            awful.spawn("pactl set-sink-volume @DEFAULT_SINK@ +3%")
+            pulsebar.notify()
+        end
+    ),
+    awful.key({modkey, "Control"}, "Down",
+    	function()
+            awful.spawn("pactl set-sink-volume @DEFAULT_SINK@ -3%")
+            pulsebar.notify()
+        end
     ),
     awful.key({}, "XF86AudioMute",
     	function() awful.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle") end
