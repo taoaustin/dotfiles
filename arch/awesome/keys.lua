@@ -9,7 +9,7 @@ local modkey = "Mod4"
 local altkey = "Mod1"
 local keys = {}
 
-local pulsebar = lain.widget.pulsebar()
+local alsabar = lain.widget.alsabar()
 
 keys.globalkeys = gears.table.join(
     ---------------------------
@@ -24,29 +24,32 @@ keys.globalkeys = gears.table.join(
     awful.key({}, "XF86AudioRaiseVolume",
     	function()
             awful.spawn("pactl set-sink-volume @DEFAULT_SINK@ +3%")
-            pulsebar.notify()
+            alsabar.notify()
         end
     ),
     awful.key({}, "XF86AudioLowerVolume",
     	function()
             awful.spawn("pactl set-sink-volume @DEFAULT_SINK@ -3%")
-            pulsebar.notify()
+            alsabar.notify()
         end
     ),
     awful.key({modkey, "Control"}, "Up",
     	function()
             awful.spawn("pactl set-sink-volume @DEFAULT_SINK@ +3%")
-            pulsebar.notify()
+            alsabar.notify()
         end
     ),
     awful.key({modkey, "Control"}, "Down",
     	function()
             awful.spawn("pactl set-sink-volume @DEFAULT_SINK@ -3%")
-            pulsebar.notify()
+            alsabar.notify()
         end
     ),
     awful.key({}, "XF86AudioMute",
-    	function() awful.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle") end
+    	function()
+            awful.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle")
+            alsabar.notify()
+        end
     ),
     awful.key({}, "XF86AudioPlay",
         function() awful.spawn("playerctl --player=spotify,%any play-pause") end

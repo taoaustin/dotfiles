@@ -7,8 +7,8 @@ run() {
   fi
 }
 
-# run picom -b
-run autorandr --change
+run picom -b
+# run autorandr --change
 # run blueman-applet
 # run pasystray
-run pulseaudio &
+run /usr/local/libexec/pipewire-module-xrdp/load_pw_modules.sh
