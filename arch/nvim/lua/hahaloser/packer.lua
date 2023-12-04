@@ -43,6 +43,7 @@ require('packer').startup(function(use)
     use 'tpope/vim-fugitive' -- git in vim with ":Git" commands
     use 'lewis6991/gitsigns.nvim' -- git decors, see added/changed lines
     use 'windwp/nvim-autopairs' -- auto closing brackets + indent
+    use 'windwp/nvim-ts-autotag' -- auto closing tags (html+)
     use 'petertriho/nvim-scrollbar' -- shows a scrollbar + extra
     use 'norcalli/nvim-colorizer.lua' -- highlights hex color w/ its color
     use 'marko-cerovac/material.nvim' -- colorscheme
@@ -55,5 +56,11 @@ require('packer').startup(function(use)
     use {'romgrk/barbar.nvim', requires = 'nvim-web-devicons'} -- better tabs
     use 'tpope/vim-commentary' -- vscode-like commenting
     use 'lukas-reineke/indent-blankline.nvim' -- indentation level
+    use({
+        "iamcco/markdown-preview.nvim",
+        run = function() vim.fn["mkdp#util#install"]() end,
+    })
 end)
+
+
 

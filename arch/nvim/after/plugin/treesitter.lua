@@ -16,6 +16,9 @@ require('nvim-treesitter.configs').setup {
     ensure_installed = {"haxe"},
     highlight = {
         enable = true
+    },
+    autotag = {
+        enable = true
     }
 }
 
