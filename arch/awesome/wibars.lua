@@ -28,7 +28,7 @@ local bat = lain.widget.bat({
 local cpu = lain.widget.cpu({
     settings =
         function ()
-            local usage = string.format(":%2d%%", cpu_now.usage)
+            local usage = string.format(" :%2d%%", cpu_now.usage)
             widget:set_markup(usage)
         end
 })
@@ -36,7 +36,7 @@ local cpu = lain.widget.cpu({
 local cpu_temp = lain.widget.temp({
     settings =
         function ()
-            local temp = string.format("(%2d 糖)", coretemp_now)
+            local temp = string.format("(%2d󰔄)", coretemp_now)
             widget:set_markup(temp)
         end
 })
@@ -160,7 +160,7 @@ function bars.create(s)
     s.mytags = wibox {
         screen = s,
         width = 100,
-        height = 20,
+        height = 25,
         x = s.geometry.x + 2 * beautiful.useless_gap,
         y = s.geometry.y,
         ontop = false,
