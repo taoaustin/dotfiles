@@ -13,4 +13,5 @@ opt.expandtab=true
 opt.shiftwidth=4
 opt.tabstop=4
 opt.completeopt={"noinsert","noselect","menuone", "menu"}
+opt.signcolumn = "yes"
 

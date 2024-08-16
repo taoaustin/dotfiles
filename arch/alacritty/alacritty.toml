@@ -1,0 +1,25 @@
+import = ["~/.config/alacritty/melange_dark.toml"]
+
+[font]
+size = 10
+
+[font.bold]
+style = "Bold"
+
+[font.bold_italic]
+style = "Bold Italic"
+
+[font.italic]
+style = "Italic"
+
+[font.normal]
+family = "NotoSansM Nerd Font Mono"
+style = "Regular"
+
+[window]
+opacity = 0.96
+option_as_alt = "OnlyLeft"
+
+[window.padding]
+x = 3
+y = 3

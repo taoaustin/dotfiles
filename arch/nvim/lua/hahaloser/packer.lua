@@ -28,7 +28,12 @@ require('packer').startup(function(use)
         'nvimdev/lspsaga.nvim',
         after = 'nvim-lspconfig',
         config = function()
-            require('lspsaga').setup({})
+            require('lspsaga').setup({
+                lightbulb = {
+                    virtual_text = false,
+                    enable_in_insert = false
+                }
+            })
         end,
     }
     use 'hrsh7th/nvim-cmp' -- autocomplete
@@ -60,6 +65,8 @@ require('packer').startup(function(use)
         "iamcco/markdown-preview.nvim",
         run = function() vim.fn["mkdp#util#install"]() end,
     })
+    use 'mfussenegger/nvim-jdtls' --java language server
+    use 'scalameta/nvim-metals'
 end)
 
 

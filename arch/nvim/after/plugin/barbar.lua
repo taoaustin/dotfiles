@@ -12,3 +12,5 @@ vim.keymap.set('n', '<A-9>', '<Cmd>BufferGoto 9<CR>', {noremap = true, silent = 
 vim.keymap.set('n', '<A-0>', '<Cmd>BufferLast<CR>', {noremap = true, silent = true})
 vim.keymap.set('n', '<A-w>', '<Cmd>BufferClose<CR>', {noremap = true, silent = true})
 vim.keymap.set('n', '<A-S-w>', '<Cmd>BufferRestore<CR>', {noremap = true, silent = true})
+vim.keymap.set('n', '<A-Tab>', '<Cmd>BufferNext<CR>', {noremap = true, silent = true})
+vim.keymap.set('n', '<A-S-Tab>', '<Cmd>BufferPrevious<CR>', {noremap = true, silent = true})
