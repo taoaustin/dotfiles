@@ -3,6 +3,11 @@ require ('telescope').setup({
         colorscheme = {
             enable_preview = true
         }
+    },
+    defaults = {
+        file_ignore_patterns = {
+            "node_modules"
+        }
     }
 })
 

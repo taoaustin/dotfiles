@@ -13,7 +13,6 @@ parser_config.haxe = {
 
 require('nvim-treesitter.configs').setup {
     auto_install = true, -- installs missing parser when opening filetype
-    ensure_installed = {"haxe"},
     highlight = {
         enable = true
     },
