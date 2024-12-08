@@ -3,7 +3,7 @@ capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 local lspconfig = require('lspconfig')
 local servers = {
-    "tsserver",
+    "ts_ls",
     -- "ocamllsp",
     "clangd",
     "omnisharp",
