@@ -1,8 +1,11 @@
 local luasnip = require('luasnip')
 local cmp = require('cmp')
 cmp.setup({
+    experimental = {
+        ghost_text = true
+    },
     snippet = {
-        -- REQUIRED - you must specify a snippet engine
+        -- required - you must specify a snippet engine
         expand = function(args)
             require('luasnip').lsp_expand(args.body)
         end,
@@ -13,7 +16,7 @@ cmp.setup({
         ['<C-Space>'] = cmp.mapping.complete(),
         ['<C-e>'] = cmp.mapping.abort(),
         -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-        ['<CR>'] = cmp.mapping.confirm({select = false}),
+        ['<CR>'] = cmp.mapping.confirm({ select = false }),
         ['<Tab>'] = function(fallback)
             if cmp.visible() then
                 cmp.select_next_item()
@@ -35,10 +38,10 @@ cmp.setup({
         --['<Esc>'] = cmp.mapping.abort()
     }),
     sources = cmp.config.sources({
-        {name = 'nvim_lsp'},
-        {name = 'luasnip'}, -- For luasnip users.
+        { name = 'nvim_lsp' },
+        { name = 'luasnip' }, -- For luasnip users.
     }, {
-        {name = 'buffer'},
+        { name = 'buffer' },
     })
 })
 
@@ -46,7 +49,7 @@ cmp.setup({
 cmp.setup.cmdline({ '/', '?' }, {
     mapping = cmp.mapping.preset.cmdline(),
     sources = {
-        {name = 'buffer'}
+        { name = 'buffer' }
     }
 })
 
@@ -54,9 +57,9 @@ cmp.setup.cmdline({ '/', '?' }, {
 cmp.setup.cmdline(':', {
     mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources({
-        {name = 'path'}
+        { name = 'path' }
     }, {
-        {name = 'cmdline'}
+        { name = 'cmdline' }
     })
 })
 
@@ -65,4 +68,3 @@ cmp.event:on(
     'confirm_done',
     cmp_autopairs.on_confirm_done()
 )
-
