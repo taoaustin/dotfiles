@@ -2,7 +2,7 @@
 import = ["~/.config/alacritty/melange_dark.toml"]
 
 [font]
-size = 10
+size = 12
 
 [font.bold]
 style = "Bold"
@@ -14,7 +14,7 @@ style = "Bold Italic"
 style = "Italic"
 
 [font.normal]
-family = "NotoSansM Nerd Font Mono"
+family = "0xProto Nerd Font Mono"
 style = "Regular"
 
 [window]
