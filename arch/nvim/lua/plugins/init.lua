@@ -14,17 +14,4 @@ return {
       },
     },
   },
-  {
-    "snacks.nvim",
-    opts = {
-      indent = {
-        indent = {
-          hl = "MiniIndentscopeSymbol",
-        },
-        scope = {
-          hl = "SnacksIndent",
-        },
-      },
-    },
-  },
 }
