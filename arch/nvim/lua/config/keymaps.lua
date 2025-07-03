@@ -7,7 +7,11 @@ vim.keymap.set("v", "<S-Tab>", "<gv", { noremap = true, silent = true })
 vim.keymap.set("i", "<S-Tab>", "<C-d>", { noremap = true, silent = true })
 vim.keymap.set("n", "<Tab>", ">>", { noremap = true, silent = true })
 vim.keymap.set("n", "<S-Tab>", "<<", { noremap = true, silent = true })
+vim.keymap.set("n", "<Leader>p", '"0p', { noremap = true, silent = true })
 if vim.uv.os_uname().sysname == "Darwin" then
   vim.keymap.set("n", "<D-s>", ":w<Cr>", { noremap = true, silent = true })
   vim.keymap.set({ "i", "v" }, "<D-s>", "<Esc>:w<Cr>", { noremap = true, silent = true })
+  vim.keymap.set("i", "<D-z>", "<Esc>ua", { noremap = true, silent = true })
+  vim.keymap.set("v", "<D-z>", "<Esc>ugv", { noremap = true, silent = true })
+  vim.keymap.set("n", "<D-z>", "u", { noremap = true, silent = true })
 end
