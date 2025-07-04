@@ -3,7 +3,7 @@ return {
     "folke/snacks.nvim",
     opts = {
       explorer = {
-        replace_netrw = false,
+        replace_netrw = true,
       },
     },
   },
@@ -12,7 +12,7 @@ return {
     lazy = false,
     opts = {
       options = {
-        use_as_default_explorer = true,
+        use_as_default_explorer = false,
       },
     },
   },

@@ -1,24 +1,7 @@
 return {
-  {
-    "snacks.nvim",
-    opts = {
-      indent = {
-        indent = {
-          hl = "MiniIndentscopeSymbol",
-        },
-        scope = {
-          hl = "SnacksIndent",
-        },
-      },
-    },
-  },
   { "savq/melange-nvim" },
-  {
-    "xiantang/darcula-dark.nvim",
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-    },
-  },
+  { "EdenEast/nightfox.nvim" },
+  { "xiantang/darcula-dark.nvim" },
   {
     "everviolet/nvim",
     name = "evergarden",
@@ -42,14 +25,22 @@ return {
     },
   },
   {
+    "ramojus/mellifluous.nvim",
+    opts = {
+      colorset = "mellifluous",
+    },
+  },
+  { "ptdewey/darkearth-nvim" },
+  {
     "LazyVim/LazyVim",
     opts = {
       colorscheme = function()
         vim.cmd.colorscheme("melange")
-        -- vim.cmd.colorscheme("evergarden")
+        -- vim.cmd.colorscheme("mellifluous")
+        -- vim.cmd.colorscheme("terafox")
         -- vim.cmd.colorscheme("darcula-dark")
-        vim.cmd.highlight({ args = { "Normal", "guibg=NONE", "ctermbg=NONE" } })
-        vim.cmd.highlight({ args = { "EndOfBuffer", "guibg=NONE", "ctermbg=NONE" } })
+        -- vim.cmd.highlight({ args = { "Normal", "guibg=NONE", "ctermbg=NONE" } })
+        -- vim.cmd.highlight({ args = { "EndOfBuffer", "guibg=NONE", "ctermbg=NONE" } })
       end,
     },
   },
