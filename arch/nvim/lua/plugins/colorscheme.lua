@@ -39,8 +39,8 @@ return {
         -- vim.cmd.colorscheme("mellifluous")
         -- vim.cmd.colorscheme("terafox")
         -- vim.cmd.colorscheme("darcula-dark")
-        -- vim.cmd.highlight({ args = { "Normal", "guibg=NONE", "ctermbg=NONE" } })
-        -- vim.cmd.highlight({ args = { "EndOfBuffer", "guibg=NONE", "ctermbg=NONE" } })
+        vim.cmd.highlight({ args = { "Normal", "guibg=NONE", "ctermbg=NONE" } })
+        vim.cmd.highlight({ args = { "EndOfBuffer", "guibg=NONE", "ctermbg=NONE" } })
       end,
     },
   },

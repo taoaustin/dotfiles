@@ -81,7 +81,7 @@ local tasklist_buttons = gears.table.join(
 
 function bars.create(s)
 	-- Each screen has its own tag table.
-	awful.tag({ "1", "2", "3", "4", "5" }, s, awful.layout.layouts[1])
+	awful.tag({ "net", "web", "dev", "hel", "was" }, s, awful.layout.layouts[1])
 
 	-- Create a promptbox for each screen
 	s.mypromptbox = awful.widget.prompt({})
@@ -109,19 +109,26 @@ function bars.create(s)
 		buttons = taglist_buttons,
 		style = {
 			shape = function(cr, w, h)
-				gears.shape.rounded_rect(cr, w, h, 8)
+				gears.shape.circle(cr, w, h)
+				-- gears.shape.rounded_rect(cr, w, h, 6)
 			end,
 		},
-		layout = { layout = wibox.layout.flex.horizontal },
+		layout = {
+			layout = wibox.layout.flex.horizontal,
+		},
 		widget_template = {
 			{
 				{
-					id = "text_role",
-					widget = wibox.widget.textbox,
+					wibox.widget.base.make_widget(),
+					shape = gears.shape.circle,
+					bg = beautiful.fg_normal,
+					widget = wibox.container.background,
 				},
-				widget = wibox.container.place,
+				margins = 5,
+				widget = wibox.container.margin,
 			},
 			id = "background_role",
+			shape_clip = true,
 			widget = wibox.container.background,
 		},
 	})
@@ -137,6 +144,7 @@ function bars.create(s)
 			end,
 		},
 		layout = {
+			spacing = 2,
 			max_widget_size = 35,
 			layout = wibox.layout.flex.horizontal,
 		},
@@ -156,7 +164,10 @@ function bars.create(s)
 					},
 					widget = wibox.container.place,
 				},
-				margins = 2,
+				top = 8,
+				bottom = 8,
+				left = 2,
+				right = 2,
 				widget = wibox.container.margin,
 			},
 			id = "background_role",
@@ -167,7 +178,7 @@ function bars.create(s)
 	s.mytags = wibox({
 		screen = s,
 		width = 100,
-		height = 25,
+		height = 35,
 		x = s.geometry.x + 2 * beautiful.useless_gap,
 		y = s.geometry.y,
 		ontop = false,
@@ -185,7 +196,7 @@ function bars.create(s)
 		widget = wibox.container.margin,
 	})
 	s.mytags:struts({
-		top = s.mytags.height + s.mytags.y,
+		top = s.mytags.height + s.mytags.y + beautiful.border_width,
 	})
 
 	s.mytasks = wibox({
@@ -230,7 +241,7 @@ function bars.create(s)
 	})
 	s.mylayout:setup({
 		s.mylayoutbox,
-		margins = beautiful.useless_gap,
+		margins = 5,
 		widget = wibox.container.margin,
 	})
 
