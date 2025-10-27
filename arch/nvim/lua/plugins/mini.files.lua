@@ -8,7 +8,7 @@ return {
     },
   },
   {
-    "echasnovski/mini.files",
+    "nvim-mini/mini.files",
     lazy = false,
     opts = {
       options = {
