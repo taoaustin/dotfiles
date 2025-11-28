@@ -3,10 +3,11 @@ if status is-interactive
 end
 
 alias vim="nvim"
-alias g14="g++ -std=c++14 -Wall -g"
-alias g17="g++ -std=c++17 -Wall -g"
-alias gst="gst ~/.config/floatfix.st"
-alias spot="LD_PRELOAD=/usr/lib/spotify-adblock.so spotify &"
+alias ls="eza -ah --icons"
+# alias g14="g++ -std=c++14 -Wall -g"
+# alias g17="g++ -std=c++17 -Wall -g"
+# alias gst="gst ~/.config/floatfix.st"
+# alias spot="LD_PRELOAD=/usr/lib/spotify-adblock.so spotify &"
 set -Ux EDITOR nvim
 # set -U fish_user_paths (ruby -e 'puts Gem.user_dir')/bin
 zoxide init fish | source
