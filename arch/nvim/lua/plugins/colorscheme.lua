@@ -31,11 +31,14 @@ return {
     },
   },
   { "ptdewey/darkearth-nvim" },
+  { "xero/miasma.nvim" },
   {
     "LazyVim/LazyVim",
     opts = {
       colorscheme = function()
         vim.cmd.colorscheme("melange")
+        -- vim.cmd.colorscheme("darkearth")
+        -- vim.cmd.colorscheme("miasma")
         -- vim.cmd.colorscheme("mellifluous")
         -- vim.cmd.colorscheme("terafox")
         -- vim.cmd.colorscheme("darcula-dark")
