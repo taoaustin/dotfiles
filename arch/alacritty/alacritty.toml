@@ -1,6 +1,9 @@
 [general]
 import = ["~/.config/alacritty/melange_dark.toml"]
 
+[env]
+TERM = "xterm-256color"
+
 [font]
 size = 10
 
