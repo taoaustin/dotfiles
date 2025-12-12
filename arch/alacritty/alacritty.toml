@@ -5,7 +5,7 @@ import = ["~/.config/alacritty/melange_dark.toml"]
 TERM = "xterm-256color"
 
 [font]
-size = 10
+size = 12
 
 [font.bold]
 style = "Bold"
